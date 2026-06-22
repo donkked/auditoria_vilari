@@ -447,6 +447,16 @@
   font-style: normal;
 }
 
+/* ── Images ── */
+.md-content img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-md);
+  display: block;
+  margin: 16px 0 24px;
+}
+
 /* ── Lists ── */
 .md-content ul,
 .md-content ol {

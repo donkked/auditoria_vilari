@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Resumen from './components/Resumen'
 import InyeccionSQL from './components/InyeccionSQL'
 import XSS from './components/XSS'
@@ -147,6 +148,7 @@ function Layout() {
 
   return (
     <div className="app-layout">
+      <ScrollToTop />
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="app-right">
         <Topbar onMenuClick={() => setSidebarOpen(v => !v)} />
