@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PageHero from './PageHero'
 import MarkdownRenderer from './MarkdownRenderer'
 import content from '../../docs_vilari/06_matriz_vilari.md?raw'
 
@@ -37,7 +38,14 @@ export default function Matriz() {
   const [hovered, setHovered] = useState<Riesgo | null>(null)
 
   return (
-    <article className="md-content">
+    <>
+      <PageHero
+        title="Matriz de Riesgo"
+        subtitle="Evaluación de probabilidad × impacto para 10 amenazas identificadas en la plataforma SaludOnline"
+        icon="📊"
+        theme="matrix"
+      />
+      <article className="md-content">
 
       <div className="heatmap-section">
         <h2>Mapa de Calor — Probabilidad × Impacto</h2>
@@ -131,5 +139,6 @@ export default function Matriz() {
 
       <MarkdownRenderer content={content} />
     </article>
+    </>
   )
 }
