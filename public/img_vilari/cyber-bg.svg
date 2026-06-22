@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bgGrad" cx="70%" cy="30%" r="90%">
+      <stop offset="0%" stop-color="#0c1a2b"/>
+      <stop offset="55%" stop-color="#070e1a"/>
+      <stop offset="100%" stop-color="#04070e"/>
+    </radialGradient>
+    <pattern id="hex" width="56" height="64" patternUnits="userSpaceOnUse" patternTransform="scale(1)">
+      <path d="M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z"
+        fill="none" stroke="#22d3ee" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1440" height="960" fill="url(#bgGrad)"/>
+  <rect width="1440" height="960" fill="url(#hex)"/>
+
+  <!-- Network connections -->
+  <g stroke="url(#lineGrad)" stroke-width="1.2" fill="none">
+    <path d="M180 220 L420 160 L640 300 L900 200 L1180 320"/>
+    <path d="M120 560 L360 480 L560 620 L820 540 L1080 660 L1320 580"/>
+    <path d="M420 160 L360 480"/>
+    <path d="M640 300 L560 620"/>
+    <path d="M900 200 L820 540"/>
+    <path d="M1180 320 L1080 660"/>
+    <path d="M260 800 L520 740 L760 840 L1020 760 L1280 860"/>
+    <path d="M560 620 L760 840"/>
+    <path d="M820 540 L1020 760"/>
+  </g>
+
+  <!-- Network nodes -->
+  <g fill="#22d3ee">
+    <circle cx="180" cy="220" r="3.5" opacity="0.9"/>
+    <circle cx="420" cy="160" r="5" opacity="0.95"/>
+    <circle cx="640" cy="300" r="4" opacity="0.85"/>
+    <circle cx="900" cy="200" r="5.5" opacity="1"/>
+    <circle cx="1180" cy="320" r="3.5" opacity="0.8"/>
+    <circle cx="360" cy="480" r="4.5" opacity="0.9"/>
+    <circle cx="560" cy="620" r="6" opacity="1"/>
+    <circle cx="820" cy="540" r="4" opacity="0.85"/>
+    <circle cx="1080" cy="660" r="5" opacity="0.95"/>
+    <circle cx="1320" cy="580" r="3.5" opacity="0.8"/>
+    <circle cx="520" cy="740" r="4" opacity="0.85"/>
+    <circle cx="760" cy="840" r="5" opacity="0.9"/>
+    <circle cx="1020" cy="760" r="4" opacity="0.85"/>
+  </g>
+
+  <!-- Glow halos on key nodes -->
+  <g fill="#22d3ee" opacity="0.25" filter="url(#soft)">
+    <circle cx="900" cy="200" r="14"/>
+    <circle cx="560" cy="620" r="16"/>
+    <circle cx="1080" cy="660" r="12"/>
+  </g>
+
+  <!-- Shield + medical cross watermark (telemedicine security) -->
+  <g transform="translate(1080 540)" opacity="0.06">
+    <path d="M120 0 L0 45 L0 130 C0 210 55 270 120 295 C185 270 240 210 240 130 L240 45 Z"
+      fill="none" stroke="#22d3ee" stroke-width="4"/>
+    <path d="M120 95 L120 195 M70 145 L170 145"
+      stroke="#22d3ee" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>
