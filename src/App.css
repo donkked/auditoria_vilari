@@ -606,6 +606,7 @@
   width: 88px;
   height: 68px;
   border-radius: 8px;
+  border: 2px solid transparent;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -613,12 +614,13 @@
   position: relative;
   gap: 3px;
   padding: 6px;
-  transition: filter 0.15s;
+  transition: filter 0.15s, transform 0.1s;
   cursor: default;
 }
 
 .heatmap-cell:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
+  transform: scale(1.04);
 }
 
 .cell-score {
@@ -730,6 +732,19 @@
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 6px;
   margin-top: 2px;
+}
+
+.risk-tooltip-placeholder {
+  background: #f8fafc;
+  border: 1px dashed var(--c-border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--c-muted);
+  text-align: center;
+  max-width: 520px;
+  font-style: italic;
 }
 
 .heatmap-legend {

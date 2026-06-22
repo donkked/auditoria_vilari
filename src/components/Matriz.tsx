@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import MarkdownRenderer from './MarkdownRenderer'
 import content from '../../docs_vilari/06_matriz_vilari.md?raw'
 
 interface Riesgo {
@@ -12,76 +11,66 @@ interface Riesgo {
 }
 
 const riesgos: Riesgo[] = [
-  { id: 'R-01', nombre: 'Inyección SQL', probabilidad: 3, impacto: 5, descripcion: 'Expone base de datos completa de pacientes' },
-  { id: 'R-02', nombre: 'Inyección de Comandos', probabilidad: 2, impacto: 5, descripcion: 'Control total del servidor web' },
-  { id: 'R-03', nombre: 'XSS Reflejado', probabilidad: 3, impacto: 3, descripcion: 'Robo de sesiones de médicos y pacientes' },
-  { id: 'R-04', nombre: 'Ransomware', probabilidad: 3, impacto: 5, descripcion: 'Cifrado de toda la infraestructura clínica' },
-  { id: 'R-05', nombre: 'Phishing a médicos', probabilidad: 4, impacto: 3, descripcion: 'Robo de credenciales de acceso al sistema' },
-  { id: 'R-06', nombre: 'Acceso a recetas', probabilidad: 3, impacto: 4, descripcion: 'Acceso no autorizado a prescripciones médicas' },
+  { id: 'R-01', nombre: 'Inyección SQL',        probabilidad: 3, impacto: 5, descripcion: 'Expone base de datos completa de pacientes' },
+  { id: 'R-02', nombre: 'Iny. de Comandos',     probabilidad: 2, impacto: 5, descripcion: 'Control total del servidor web' },
+  { id: 'R-03', nombre: 'XSS Reflejado',        probabilidad: 3, impacto: 3, descripcion: 'Robo de sesiones de médicos y pacientes' },
+  { id: 'R-04', nombre: 'Ransomware',            probabilidad: 3, impacto: 5, descripcion: 'Cifrado de toda la infraestructura clínica' },
+  { id: 'R-05', nombre: 'Phishing médicos',     probabilidad: 4, impacto: 3, descripcion: 'Robo de credenciales de acceso al sistema' },
+  { id: 'R-06', nombre: 'Acceso a recetas',     probabilidad: 3, impacto: 4, descripcion: 'Acceso no autorizado a prescripciones médicas' },
   { id: 'R-07', nombre: 'Filtración financiera', probabilidad: 2, impacto: 4, descripcion: 'Exposición de datos de pago y seguros' },
-  { id: 'R-08', nombre: 'Fallo de backup', probabilidad: 2, impacto: 4, descripcion: 'Imposibilidad de recuperar datos clínicos' },
+  { id: 'R-08', nombre: 'Fallo de backup',      probabilidad: 2, impacto: 4, descripcion: 'Imposibilidad de recuperar datos clínicos' },
   { id: 'R-09', nombre: 'Fallo videoconsultas', probabilidad: 3, impacto: 3, descripcion: 'Interrupción de teleconsultas en curso' },
-  { id: 'R-10', nombre: 'Insider malicioso', probabilidad: 2, impacto: 5, descripcion: 'Empleado vende fichas clínicas a terceros' },
+  { id: 'R-10', nombre: 'Insider malicioso',    probabilidad: 2, impacto: 5, descripcion: 'Empleado vende fichas clínicas a terceros' },
 ]
 
-const etiquetasProbabilidad = ['1 — Rara', '2 — Improbable', '3 — Posible', '4 — Probable', '5 — Casi Seguro']
-const etiquetasImpacto = ['1 — Insignificante', '2 — Menor', '3 — Moderado', '4 — Mayor', '5 — Catastrófico']
+const labelsProb = ['1 — Rara', '2 — Improbable', '3 — Posible', '4 — Probable', '5 — Casi Seguro']
+const labelsImp  = ['1\nInsignificante', '2\nMenor', '3\nModerado', '4\nMayor', '5\nCatastrófico']
 
-function getColor(score: number): string {
-  if (score >= 15) return '#dc3545'
-  if (score >= 10) return '#fd7e14'
-  if (score >= 5) return '#ffc107'
-  return '#28a745'
-}
-
-function getNivelLabel(score: number): string {
-  if (score >= 15) return 'Crítico'
-  if (score >= 10) return 'Alto'
-  if (score >= 5) return 'Medio'
-  return 'Bajo'
+function getColor(score: number) {
+  if (score >= 15) return { bg: '#fca5a5', border: '#ef4444', label: 'Crítico',  text: '#7f1d1d' }
+  if (score >= 10) return { bg: '#fdba74', border: '#f97316', label: 'Alto',     text: '#7c2d12' }
+  if (score >= 5)  return { bg: '#fde68a', border: '#eab308', label: 'Medio',    text: '#713f12' }
+  return              { bg: '#bbf7d0', border: '#22c55e', label: 'Bajo',      text: '#14532d' }
 }
 
 export default function Matriz() {
-  const [tooltip, setTooltip] = useState<Riesgo | null>(null)
+  const [hovered, setHovered] = useState<Riesgo | null>(null)
 
   return (
     <article className="md-content">
-      <h1>Matriz de Riesgo — SaludOnline</h1>
 
-      <section className="heatmap-section">
-        <h2>Mapa de Calor Interactivo (Probabilidad × Impacto)</h2>
-        <p>Pasa el cursor sobre los puntos de riesgo para ver el detalle de cada amenaza identificada.</p>
+      <div className="heatmap-section">
+        <h2>Mapa de Calor — Probabilidad × Impacto</h2>
+        <p>Pasa el cursor sobre los puntos de riesgo para ver el detalle de cada amenaza identificada para SaludOnline.</p>
 
         <div className="heatmap-wrapper">
-          <div className="heatmap-y-label">PROBABILIDAD →</div>
+          <div className="heatmap-y-label">PROBABILIDAD ↑</div>
 
           <div className="heatmap-container">
             <div className="heatmap-grid">
-              {/* Filas: probabilidad de 5 (arriba) a 1 (abajo) */}
               {[5, 4, 3, 2, 1].map((prob) => (
                 <div key={prob} className="heatmap-row">
-                  <div className="heatmap-row-label">{etiquetasProbabilidad[prob - 1]}</div>
-                  {/* Columnas: impacto de 1 (izq) a 5 (der) */}
+                  <div className="heatmap-row-label">{labelsProb[prob - 1]}</div>
                   {[1, 2, 3, 4, 5].map((imp) => {
                     const score = prob * imp
-                    const bg = getColor(score)
-                    const risksHere = riesgos.filter(r => r.probabilidad === prob && r.impacto === imp)
+                    const { bg, border } = getColor(score)
+                    const here = riesgos.filter(r => r.probabilidad === prob && r.impacto === imp)
                     return (
                       <div
                         key={imp}
                         className="heatmap-cell"
-                        style={{ backgroundColor: bg }}
+                        style={{ background: bg, borderColor: border }}
                       >
                         <span className="cell-score">{score}</span>
-                        {risksHere.map((r) => (
+                        {here.map((r) => (
                           <button
                             key={r.id}
                             className="risk-dot"
-                            onMouseEnter={() => setTooltip(r)}
-                            onMouseLeave={() => setTooltip(null)}
+                            onMouseEnter={() => setHovered(r)}
+                            onMouseLeave={() => setHovered(null)}
                             aria-label={`${r.id}: ${r.nombre}`}
                           >
-                            {r.id.replace('R-', '')}
+                            {r.id.replace('R-0', '').replace('R-', '')}
                           </button>
                         ))}
                       </div>
@@ -91,38 +80,56 @@ export default function Matriz() {
               ))}
             </div>
 
-            {/* Etiquetas eje X */}
             <div className="heatmap-x-axis">
               <div className="heatmap-corner" />
-              {etiquetasImpacto.map((label) => (
-                <div key={label} className="heatmap-x-label">{label}</div>
+              {labelsImp.map((label) => (
+                <div key={label} className="heatmap-x-label">
+                  {label.split('\n').map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>)}
+                </div>
               ))}
             </div>
             <div className="heatmap-x-title">IMPACTO →</div>
           </div>
         </div>
 
-        {/* Tooltip */}
-        {tooltip && (
+        {hovered ? (
           <div className="risk-tooltip">
-            <strong>{tooltip.id} — {tooltip.nombre}</strong>
-            <span>P: {tooltip.probabilidad} × I: {tooltip.impacto} = <strong>{tooltip.probabilidad * tooltip.impacto}</strong> ({getNivelLabel(tooltip.probabilidad * tooltip.impacto)})</span>
-            <span>{tooltip.descripcion}</span>
+            <span className="risk-tooltip-id">{hovered.id}</span>
+            <span className="risk-tooltip-name">{hovered.nombre}</span>
+            <span className="risk-tooltip-score">
+              P: <strong>{hovered.probabilidad}</strong> × I: <strong>{hovered.impacto}</strong>
+              {' = '}
+              <strong style={{ color: hovered.probabilidad * hovered.impacto >= 15 ? '#f87171' : hovered.probabilidad * hovered.impacto >= 10 ? '#fb923c' : '#facc15' }}>
+                {hovered.probabilidad * hovered.impacto} — {getColor(hovered.probabilidad * hovered.impacto).label}
+              </strong>
+            </span>
+            <span className="risk-tooltip-desc">{hovered.descripcion}</span>
+          </div>
+        ) : (
+          <div className="risk-tooltip-placeholder">
+            Pasa el cursor sobre un punto para ver el detalle del riesgo
           </div>
         )}
 
-        {/* Leyenda */}
         <div className="heatmap-legend">
-          <div className="legend-item"><span style={{ background: '#28a745' }} />Bajo (1–4)</div>
-          <div className="legend-item"><span style={{ background: '#ffc107' }} />Medio (5–9)</div>
-          <div className="legend-item"><span style={{ background: '#fd7e14' }} />Alto (10–14)</div>
-          <div className="legend-item"><span style={{ background: '#dc3545' }} />Crítico (15–25)</div>
+          {[
+            { score: 1,  label: 'Bajo (1–4)' },
+            { score: 6,  label: 'Medio (5–9)' },
+            { score: 10, label: 'Alto (10–14)' },
+            { score: 15, label: 'Crítico (15–25)' },
+          ].map(({ score, label }) => {
+            const { bg, border } = getColor(score)
+            return (
+              <div key={label} className="legend-item">
+                <span style={{ background: bg, border: `2px solid ${border}` }} />
+                {label}
+              </div>
+            )
+          })}
         </div>
-      </section>
+      </div>
 
-      <section className="md-content">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
-      </section>
+      <MarkdownRenderer content={content} />
     </article>
   )
 }
