@@ -13,9 +13,11 @@ export default function Comandos() {
         badge={{ text: '10.0', cls: 'critical' }}
         vector="CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
       />
-      <article className="md-content">
-        <MarkdownRenderer content={content} />
-      </article>
+      <div className="content-body">
+        <article className="md-content">
+          <MarkdownRenderer content={content} />
+        </article>
+      </div>
     </>
   )
 }

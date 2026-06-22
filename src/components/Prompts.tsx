@@ -11,9 +11,11 @@ export default function Prompts() {
         icon="🤖"
         theme="ai"
       />
-      <article className="md-content">
-        <MarkdownRenderer content={content} />
-      </article>
+      <div className="content-body">
+        <article className="md-content">
+          <MarkdownRenderer content={content} />
+        </article>
+      </div>
     </>
   )
 }

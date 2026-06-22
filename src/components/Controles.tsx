@@ -11,9 +11,11 @@ export default function Controles() {
         icon="🛡️"
         theme="policy"
       />
-      <article className="md-content">
-        <MarkdownRenderer content={content} />
-      </article>
+      <div className="content-body">
+        <article className="md-content">
+          <MarkdownRenderer content={content} />
+        </article>
+      </div>
     </>
   )
 }

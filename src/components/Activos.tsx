@@ -11,9 +11,11 @@ export default function Activos() {
         icon="🏢"
         theme="assets"
       />
-      <article className="md-content">
-        <MarkdownRenderer content={content} />
-      </article>
+      <div className="content-body">
+        <article className="md-content">
+          <MarkdownRenderer content={content} />
+        </article>
+      </div>
     </>
   )
 }

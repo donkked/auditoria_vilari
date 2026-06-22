@@ -45,6 +45,7 @@ export default function Matriz() {
         icon="📊"
         theme="matrix"
       />
+      <div className="content-body">
       <article className="md-content">
 
       <div className="heatmap-section">
@@ -139,6 +140,7 @@ export default function Matriz() {
 
       <MarkdownRenderer content={content} />
     </article>
+    </div>
     </>
   )
 }

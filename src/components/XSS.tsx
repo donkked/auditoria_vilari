@@ -13,9 +13,11 @@ export default function XSS() {
         badge={{ text: '6.1', cls: 'medium' }}
         vector="CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
       />
-      <article className="md-content">
-        <MarkdownRenderer content={content} />
-      </article>
+      <div className="content-body">
+        <article className="md-content">
+          <MarkdownRenderer content={content} />
+        </article>
+      </div>
     </>
   )
 }
