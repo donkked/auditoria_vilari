@@ -14,10 +14,10 @@
 <script>alert('XSS')</script>
 ```
 
-En la captura se empleó una variante con una cadena identificadora propia (`johnen`) en lugar del texto genérico `XSS`, para demostrar que el script ejecuta **código arbitrario controlado por el atacante** y no un texto predefinido de demostración:
+En la captura se empleó una variante con una cadena identificadora propia (`Villarroel`) en lugar del texto genérico `XSS`, para demostrar que el script ejecuta **código arbitrario controlado por el atacante** y no un texto predefinido de demostración:
 
 ```html
-<script>alert('johnen')</script>
+<script>alert('Villarroel')</script>
 ```
 
 ### Procedimiento
@@ -25,7 +25,7 @@ En la captura se empleó una variante con una cadena identificadora propia (`joh
 1. Ingresar al módulo **XSS (Reflected)** de DVWA
 2. En el campo "What's your name?", introducir el payload
 3. Hacer clic en **Submit**
-4. El navegador ejecuta el script y muestra el cuadro de alerta. El payload queda visible **codificado en la barra de URL** (`?name=<script>alert('johnen')</script>`), lo que confirma que la entrada del usuario se refleja sin sanitización en la respuesta
+4. El navegador ejecuta el script y muestra el cuadro de alerta. El payload queda visible **codificado en la barra de URL** (`?name=<script>alert('Villarroel')</script>`), lo que confirma que la entrada del usuario se refleja sin sanitización en la respuesta
 
 ### Captura de pantalla
 
