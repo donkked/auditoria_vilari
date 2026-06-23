@@ -23,7 +23,7 @@
 
 ### Captura de pantalla
 
-![Evidencia de Inyección de Comandos en DVWA](/img_vilari/cmdi_evidencia.png)
+![Evidencia de Inyección de Comandos en DVWA](img_vilari/comandos_vilari.png)
 
 > **Nota:** Reemplazar con la captura real obtenida de DVWA.
 

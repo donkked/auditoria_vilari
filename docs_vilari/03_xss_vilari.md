@@ -23,7 +23,7 @@
 
 ### Captura de pantalla
 
-![Evidencia de XSS Reflejado en DVWA](/img_vilari/xss_evidencia.png)
+![Evidencia de XSS Reflejado en DVWA](img_vilari/xss_vilari.png)
 
 > **Nota:** Reemplazar con la captura real obtenida de DVWA.
 

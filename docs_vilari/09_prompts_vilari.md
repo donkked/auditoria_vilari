@@ -13,18 +13,18 @@
 **Sección:** Estructura general del proyecto / App.tsx  
 **Herramienta:** Claude Code (VS Code Extension)  
 **Prompt utilizado:**
-> "Necesito construir una aplicación React con Vite y TypeScript para la Evaluación Sumativa N°3 de Seguridad de la Información en INACAP. La empresa asignada es SaludOnline (telemedicina, código E26). El sufijo personal es `_vilari`. Necesito: 9 archivos Markdown en `docs_vilari/`, 9 componentes React en `src/components/`, un App.tsx con navegación lateral, un mapa de calor visual para la matriz de riesgo, y que cada cambio tenga su commit. El contenido debe reflejar el impacto real en una empresa de telemedicina que custodia fichas clínicas y recetas."
+> "Necesito construir una aplicación React con Vite y TypeScript para la Evaluación Sumativa N°3 de Seguridad de la Información en INACAP. La empresa asignada es SaludOnline (telemedicina, código E26). El sufijo personal es `_vilari`. Necesito: 9 archivos Markdown en `docs_vilari/`, 9 componentes React en `src/components/`, un App.tsx con una portada de inicio y un navbar superior de navegación, un mapa de calor visual para la matriz de riesgo, y que cada cambio tenga su commit. El contenido debe reflejar el impacto real en una empresa de telemedicina que custodia fichas clínicas y recetas."
 
 **¿Qué acepté de la respuesta?**
-- La estructura completa de carpetas propuesta (`docs_vilari/`, `public/img_vilari/`, `src/components/`)
+- La estructura completa de carpetas propuesta (`docs_vilari/`, `docs_vilari/img_vilari/`, `public/img_vilari/`, `src/components/`)
 - Los 9 archivos Markdown con contenido académico detallado
 - Los scores CVSS 3.1 calculados para cada vulnerabilidad
-- La navegación lateral con agrupación por Informe A e Informe B
+- El navbar superior con agrupación por Informe A e Informe B
 - El mapa de calor interactivo para la matriz de riesgo
 
 **¿Qué corregí o adapté?**
 - Verifiqué los cálculos CVSS manualmente con la calculadora oficial del NIST (https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator) para confirmar que los vectores eran correctos
-- Agregué mis capturas de pantalla reales de DVWA en `public/img_vilari/` reemplazando los placeholders
+- Tomé mis propias capturas de pantalla de los tres ataques en DVWA y las incorporé en `docs_vilari/img_vilari/` y `public/img_vilari/` (referenciadas de forma relativa en los `.md`)
 - Ajusté los nombres de los médicos ficticios y detalles de la empresa según el contexto del ramo
 
 ---

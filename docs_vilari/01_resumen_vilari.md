@@ -42,7 +42,7 @@ El portal de clientes es una aplicación web que custodia información altamente
 
 La auditoría se realizó sobre **DVWA (Damn Vulnerable Web Application)**, una aplicación web deliberadamente vulnerable que simula el portal de clientes de SaludOnline. La configuración de seguridad fue establecida en nivel **"Low"** para exponer las vulnerabilidades en su forma más directa, tal como se encontrarían en un sistema sin controles de seguridad básicos.
 
-**URL del laboratorio:** `http://localhost/dvwa` (entorno local controlado)  
+**URL del laboratorio:** `https://dvwa-dnwe.onrender.com` (entorno controlado desplegado en Render)  
 **Credenciales de prueba:** `admin / password`
 
 ---

@@ -63,19 +63,23 @@
 IMPACTO →
                  1-Insig.  2-Menor   3-Moder.  4-Mayor   5-Catastr.
 P  5-C.Seguro  [  5-M  ] [  10-A ] [  15-C ] [  20-C ] [  25-C  ]
-R  4-Probable  [  4-B  ] [   8-M ] [  12-A ] [  16-C ] [  20-C  ]
-O  3-Posible   [  3-B  ] [   6-M ] [   9-M ] [  12-A ] [  15-C  ] ← R-01, R-04
-B  2-Improbab. [  2-B  ] [   4-B ] [   6-M ] [   8-M ] [  10-A  ] ← R-02, R-10
+R  4-Probable  [  4-B  ] [   8-M ] [  12-A ] [  16-C ] [  20-C  ] ← R-05
+O  3-Posible   [  3-B  ] [   6-M ] [   9-M ] [  12-A ] [  15-C  ] ← R-01, R-04, R-06, R-03, R-09
+B  2-Improbab. [  2-B  ] [   4-B ] [   6-M ] [   8-M ] [  10-A  ] ← R-02, R-10, R-07, R-08
 A  1-Rara      [  1-B  ] [   2-B ] [   3-B ] [   4-B ] [   5-M  ]
 ↑
 
 Riesgos identificados:
-R-01 (P=3, I=5): Crítico  → ⬛ casilla [Posible × Catastrófico]
+R-01 (P=3, I=5): Crítico  → casilla [Posible × Catastrófico]
 R-02 (P=2, I=5): Alto     → casilla [Improbable × Catastrófico]
 R-03 (P=3, I=3): Medio    → casilla [Posible × Moderado]
-R-04 (P=3, I=5): Crítico  → ⬛ casilla [Posible × Catastrófico]
+R-04 (P=3, I=5): Crítico  → casilla [Posible × Catastrófico]
 R-05 (P=4, I=3): Alto     → casilla [Probable × Moderado]
 R-06 (P=3, I=4): Alto     → casilla [Posible × Mayor]
+R-07 (P=2, I=4): Medio    → casilla [Improbable × Mayor]
+R-08 (P=2, I=4): Medio    → casilla [Improbable × Mayor]
+R-09 (P=3, I=3): Medio    → casilla [Posible × Moderado]
+R-10 (P=2, I=5): Alto     → casilla [Improbable × Catastrófico]
 ```
 
 ---
