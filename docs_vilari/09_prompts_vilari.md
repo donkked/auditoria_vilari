@@ -2,99 +2,166 @@
 
 **Alumno:** sufijo `vilari`  
 **Asignatura:** Fundamentos de Seguridad de la Información — INACAP  
-**Herramienta IA utilizada:** Claude (Anthropic) — Claude Code v4.6  
+**Herramienta IA utilizada:** Claude (Anthropic) — Claude Code  
+
+---
+
+## Nota sobre la metodología
+
+Este proyecto se construyó de forma **iterativa** con Claude Code (extensión de VS Code) a lo largo de varias sesiones. Los prompts que transcribo a continuación **resumen** las instrucciones que fui dando en cada fase; en la práctica el trabajo fue conversacional, alternando generación asistida por IA con revisión y corrección de mi parte. Las decisiones de negocio (enfoque en telemedicina, criticidad de los activos, valoración de riesgos), la **evidencia propia** (las capturas reales de los ataques en DVWA) y la verificación final del contenido fueron mías. La responsabilidad técnica del informe es del auditor, no de la herramienta.
 
 ---
 
 ## Registro de Prompts
 
-### Prompt 1 — Estructuración del proyecto
+### Prompt 1 — Estructura y andamiaje del proyecto
 
-**Sección:** Estructura general del proyecto / App.tsx  
-**Herramienta:** Claude Code (VS Code Extension)  
+**Sección:** Estructura general / `App.tsx` / 9 componentes  
 **Prompt utilizado:**
-> "Necesito construir una aplicación React con Vite y TypeScript para la Evaluación Sumativa N°3 de Seguridad de la Información en INACAP. La empresa asignada es SaludOnline (telemedicina, código E26). El sufijo personal es `_vilari`. Necesito: 9 archivos Markdown en `docs_vilari/`, 9 componentes React en `src/components/`, un App.tsx con una portada de inicio y un navbar superior de navegación, un mapa de calor visual para la matriz de riesgo, y que cada cambio tenga su commit. El contenido debe reflejar el impacto real en una empresa de telemedicina que custodia fichas clínicas y recetas."
+> "Necesito construir una aplicación React con Vite y TypeScript para la Evaluación Sumativa N°3 de Seguridad de la Información en INACAP. La empresa asignada es SaludOnline (telemedicina, código E26) y mi sufijo es `_vilari`. Crea la estructura: 9 archivos Markdown en `docs_vilari/` (resumen, los 3 ataques, activos, matriz, controles, recuperación y bitácora), 9 componentes React en `src/components/` que rendericen cada `.md`, y un mapa de calor visual para la matriz. Todo el contenido debe reflejar el impacto en una empresa de telemedicina que custodia fichas clínicas y recetas, no un análisis genérico."
 
-**¿Qué acepté de la respuesta?**
-- La estructura completa de carpetas propuesta (`docs_vilari/`, `docs_vilari/img_vilari/`, `public/img_vilari/`, `src/components/`)
-- Los 9 archivos Markdown con contenido académico detallado
-- Los scores CVSS 3.1 calculados para cada vulnerabilidad
-- El navbar superior con agrupación por Informe A e Informe B
-- El mapa de calor interactivo para la matriz de riesgo
+**¿Qué acepté?**
+- La estructura de carpetas y la correspondencia `.md` → componente
+- El esqueleto de los 9 informes y el render de Markdown con resaltado de código
 
-**¿Qué corregí o adapté?**
-- Verifiqué los cálculos CVSS manualmente con la calculadora oficial del NIST (https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator) para confirmar que los vectores eran correctos
-- Tomé mis propias capturas de pantalla de los tres ataques en DVWA y las incorporé en `docs_vilari/img_vilari/` y `public/img_vilari/` (referenciadas de forma relativa en los `.md`)
-- Ajusté los nombres de los médicos ficticios y detalles de la empresa según el contexto del ramo
+**¿Qué corregí o aporté yo?**
+- Definí el alcance real (SaludOnline / telemedicina) y los datos sensibles concretos del rubro (fichas clínicas, recetas de medicamentos controlados, datos de isapres)
+- Decidí trabajar con commits incrementales para dejar evidencia de proceso continuo
 
 ---
 
-### Prompt 2 — Análisis de impacto en telemedicina
+### Prompt 2 — Análisis de impacto en telemedicina (SQLi)
 
-**Sección:** 02_sqli_vilari.md — Impacto específico en SaludOnline  
-**Herramienta:** Claude Code  
+**Sección:** `02_sqli_vilari.md` — Impacto específico en SaludOnline  
 **Prompt utilizado:**
-> "Para SaludOnline, una empresa de telemedicina que custodia fichas clínicas, recetas con medicamentos controlados y datos de videoconsultas, ¿cuáles son las consecuencias específicas de que un atacante explote una inyección SQL con `' OR '1'='1` sobre la tabla de usuarios? Necesito al menos 5 consecuencias concretas vinculadas al rubro salud, no genéricas."
+> "Para SaludOnline, que custodia fichas clínicas, recetas con medicamentos controlados y datos de videoconsultas, ¿cuáles son las consecuencias concretas de explotar una inyección SQL con `' OR '1'='1` sobre la tabla de usuarios? Quiero al menos 5 consecuencias específicas del rubro salud, no genéricas, y la regulación chilena aplicable."
 
-**¿Qué acepté de la respuesta?**
-- Las 5 consecuencias específicas del dominio de salud (exfiltración de fichas, acceso a recetas de medicamentos controlados, modificación de diagnósticos, etc.)
-- La referencia a la Ley 19.628 como marco regulatorio chileno aplicable
+**¿Qué acepté?**
+- Las consecuencias específicas del dominio de salud (exfiltración de fichas, acceso a recetas de medicamentos controlados, alteración de diagnósticos)
 
-**¿Qué corregí o adapté?**
-- La IA inicialmente mencionó GDPR (regulación europea) como principal normativa. Lo corregí para priorizar la Ley 19.628 y la Ley 20.584, que son las normas chilenas pertinentes
-- Reordené las consecuencias de mayor a menor gravedad
+**¿Qué corregí o aporté yo?**
+- La IA tendía a citar GDPR/HIPAA (marcos extranjeros). Exigí priorizar la **Ley 19.628** y la **Ley 20.584**, que son las normas chilenas pertinentes
+- Apliqué el mismo criterio de "impacto en salud" a los otros dos ataques (XSS y comandos)
 
 ---
 
-### Prompt 3 — Mapa de calor de la matriz de riesgo
+### Prompt 3 — Defensa esperada de cada ataque
 
-**Sección:** Matriz.tsx / 06_matriz_vilari.md  
-**Herramienta:** Claude Code  
+**Sección:** `02`, `03`, `04` — Política de prevención y control de mitigación  
 **Prompt utilizado:**
-> "Necesito un componente React en TypeScript que muestre un mapa de calor 5x5 de probabilidad por impacto. Las celdas deben tener colores: verde (1-4), amarillo (5-9), naranja (10-14), rojo (15-25). Los riesgos de SaludOnline (inyección SQL, ransomware, XSS, etc.) deben aparecer como puntos sobre el mapa con tooltip descriptivo. Sin librería externa de gráficos, solo CSS y JSX."
+> "Para cada uno de los tres ataques, escribe la causa raíz técnica y la defensa correcta: en SQLi quiero consultas parametrizadas (prepared statements), no solo 'validar la entrada'; en XSS quiero codificación de salida según contexto + CSP; en inyección de comandos quiero prohibir `shell_exec` con datos del usuario y usar APIs nativas. Muestra el código vulnerable y el código seguro lado a lado."
 
-**¿Qué acepté de la respuesta?**
-- La implementación completa del mapa de calor con colores RAGB (Rojo/Ámbar/Verde)
-- La lógica de posicionamiento de los puntos de riesgo usando CSS `position: absolute`
-- El sistema de tooltips con hover
+**¿Qué acepté?**
+- El patrón vulnerable vs. seguro en cada caso (parametrización, `htmlspecialchars`/CSP, `escapeshellarg`/`subprocess` sin `shell=True`)
 
-**¿Qué corregí o adapté?**
-- Ajusté los colores para mejor contraste de accesibilidad (los originales eran demasiado saturados)
-- Corregí el orden del eje Y: la probabilidad más alta debe estar en la parte superior del mapa (el eje estaba invertido)
-- Agregué los labels de los ejes en español
+**¿Qué corregí o aporté yo?**
+- Pedí explícitamente la defensa "fuerte" (parametrización), porque sé que la IA mal dirigida suele conformarse con "sanitizar la entrada", que es insuficiente
 
 ---
 
-### Prompt 4 — Plan de recuperación ante ransomware
+### Prompt 4 — Mapa de calor de la matriz de riesgo
 
-**Sección:** 08_recuperacion_vilari.md  
-**Herramienta:** Claude Code  
+**Sección:** `Matriz.tsx` / `06_matriz_vilari.md`  
 **Prompt utilizado:**
-> "Para SaludOnline (telemedicina), diseña un procedimiento paso a paso de respuesta a ransomware considerando que el sistema maneja prescripciones médicas activas y teleconsultas en curso. Incluye los objetivos RPO y RTO para cada sistema crítico, la regla de backup 3-2-1 adaptada a salud, y las alternativas de continuidad cuando el sistema principal no está disponible (ej. recetas en papel, consultas telefónicas)."
+> "Necesito un componente React en TypeScript que muestre un mapa de calor 5×5 de probabilidad × impacto, con colores verde (1–4), amarillo (5–9), naranja (10–14) y rojo (15–25). Los riesgos de SaludOnline (SQLi, ransomware, XSS, etc.) deben ubicarse como puntos sobre la matriz. Sin librerías de gráficos, solo CSS y JSX."
 
-**¿Qué acepté de la respuesta?**
-- Los valores RPO/RTO diferenciados por sistema (15 min para DB de pacientes, 1h para recetas, etc.)
-- La estrategia de backup 3-2-1 con cronograma
-- Las alternativas de continuidad (recetas en papel, redirección a consultas telefónicas)
+**¿Qué acepté?**
+- La implementación del mapa de calor 5×5 con la escala de colores y el posicionamiento de los riesgos
 
-**¿Qué corregí o adapté?**
-- La IA sugirió un RPO de 1h para la base de datos de pacientes. Lo cambié a 15 minutos porque en emergencias médicas, una ficha clínica desactualizada puede ser tan peligrosa como no tener acceso
-- Agregué la referencia explícita a la Superintendencia de Salud como autoridad competente a notificar en Chile
+**¿Qué corregí o aporté yo?**
+- Definí yo los valores de probabilidad e impacto de cada riesgo (P×I) según el contexto del negocio
+- Corregí la orientación del eje de probabilidad (mayor probabilidad arriba) y los textos de los ejes en español
+
+---
+
+### Prompt 5 — Plan de recuperación ante ransomware
+
+**Sección:** `08_recuperacion_vilari.md`  
+**Prompt utilizado:**
+> "Diseña un procedimiento de respuesta a ransomware para SaludOnline considerando que maneja recetas activas y teleconsultas en curso. Incluye RPO y RTO por sistema crítico, la regla de backup 3-2-1 adaptada a salud, y alternativas de continuidad (recetas en papel, consultas telefónicas) cuando el sistema principal no esté disponible."
+
+**¿Qué acepté?**
+- La estructura del plan: RPO/RTO por sistema, backup 3-2-1, BCP con alternativas
+
+**¿Qué corregí o aporté yo?**
+- Ajusté el RPO de la base de datos de pacientes de 1 hora a **15 minutos**: en emergencias médicas una ficha desactualizada es tan peligrosa como no tener acceso
+- Agregué la **Superintendencia de Salud** como autoridad chilena a notificar
+
+---
+
+### Prompt 6 — Rediseño de la presentación (portada + navbar)
+
+**Sección:** `Home.tsx`, `Navbar.tsx`, `PageHero.tsx`, CSS  
+**Prompt utilizado:**
+> "Reemplaza el sidebar por una portada de inicio de una sola pantalla y un navbar superior para navegar las 9 secciones, agrupadas por Informe A (vulnerabilidades) e Informe B (matriz). Usa una paleta de ciberseguridad (azul profundo + cian/teal) y un hero temático por sección."
+
+**¿Qué acepté?**
+- La portada, el navbar superior y los heroes temáticos por sección
+
+**¿Qué corregí o aporté yo?**
+- Tengo presente que la rúbrica **no evalúa la presentación visual**; prioricé que esta fase no quitara tiempo al análisis de seguridad, que es lo que pesa en la nota
+
+---
+
+### Prompt 7 — Revisión de los documentos contra la rúbrica
+
+**Sección:** Los 9 `.md` (revisión transversal)  
+**Prompt utilizado:**
+> "Revisa los 9 documentos de la auditoría contra la rúbrica de INACAP y dime qué falta o es inconsistente: enfoque real en telemedicina, vectores y puntajes CVSS, nomenclatura `_vilari`, rutas de las capturas, y completitud de la matriz de riesgo. No cambies nada todavía, solo lista los hallazgos."
+
+**¿Qué acepté?**
+- El diagnóstico de inconsistencias detectadas
+
+**¿Qué corregí o aporté yo (tras revisar la lista)?**
+- Unifiqué la **nomenclatura y rutas de las imágenes** (`img_vilari/sqli_vilari.png`, etc.), referenciadas de forma relativa en los `.md` y reescritas a ruta absoluta por el renderer para la web
+- Completé el **mapa de calor** para que incluyera los 10 riesgos (R-01 a R-10), no solo los primeros
+- Corregí la **URL del laboratorio** en el resumen para que coincidiera con el entorno real desplegado
+
+---
+
+### Prompt 8 — Integración de mis capturas reales de DVWA
+
+**Sección:** `02`, `03`, `04` — Evidencia de los ataques  
+**Prompt utilizado:**
+> "Tomé yo mismo las capturas de los tres ataques en DVWA en nivel Low (SQLi con `' OR '1'='1`, XSS con `<script>alert('XSS')</script>` y comandos con `127.0.0.1; cat /etc/passwd`). Intégralas con los nombres `sqli_vilari.png`, `xss_vilari.png` y `comandos_vilari.png` en `docs_vilari/img_vilari/` y en `public/img_vilari/`, y verifica que se vean tanto en GitHub como en el sitio."
+
+**¿Qué acepté?**
+- La integración de las imágenes en ambas carpetas y la verificación de que el sitio las sirviera correctamente
+
+**¿Qué aporté yo?**
+- La **evidencia es propia**: las capturas las obtuve ejecutando los ataques en el DVWA del laboratorio, no son material generado por IA
+
+---
+
+### Prompt 9 — Auditoría de honestidad de esta misma bitácora
+
+**Sección:** `09_prompts_vilari.md` (autocrítica)  
+**Prompt utilizado:**
+> "Revisa mi propia bitácora de IA: marca cualquier afirmación que diga que hice algo que en realidad no hice, y verifica que los puntajes CVSS sean correctos. Quiero que el registro sea honesto, porque la evaluación valora justamente el uso transparente de la IA."
+
+**¿Qué acepté?**
+- La verificación de que los puntajes CVSS 3.1 son correctos: **10.0** (SQLi), **6.1** (XSS) y **10.0** (inyección de comandos), consistentes con la calculadora oficial CVSS 3.1 (https://www.first.org/cvss/calculator/3.1)
+- La reformulación de frases que sonaban a logros no realizados
+
+**¿Qué corregí o aporté yo?**
+- Decidí reescribir esta bitácora para que reflejara el proceso **real** (iterativo, con revisión y corrección) en lugar de un relato idealizado
 
 ---
 
 ## Reflexión Final sobre el Uso de IA
 
-El uso de Claude como asistente en esta evaluación fue productivo en dos áreas principales: la generación del esqueleto del análisis técnico y la implementación del código React.
+Usar Claude Code en esta evaluación fue útil sobre todo en dos frentes: **acelerar la redacción técnica** de los informes y **generar el código React** (componentes y mapa de calor) que de otro modo habría tomado horas.
 
-**Valor agregado de la IA:**
-- Aceleró significativamente la redacción técnica de los informes, permitiendo enfocar el tiempo en el análisis crítico más que en la escritura
-- Generó código React funcional y bien estructurado para el mapa de calor que habría tomado horas desarrollar desde cero
+**Lo que aportó la IA:**
+- Borradores estructurados del análisis y código funcional, sobre los que pude iterar rápido
+- Detección de inconsistencias cuando le pedí revisar el proyecto contra la rúbrica
 
-**Limitaciones y correcciones necesarias:**
-- La IA tiende a generalizar hacia marcos internacionales (GDPR, HIPAA) antes que la normativa local chilena. Requirió corrección activa para centrar el análisis en la Ley 19.628 y Ley 20.584
-- Los valores de RPO/RTO iniciales eran conservadores para el sector salud; fue necesario ajustarlos con criterio clínico
-- Los prompts genéricos producen respuestas genéricas. Los prompts que nombran la empresa, el tipo de dato (fichas clínicas, recetas) y la regulación aplicable producen análisis mucho más precisos y útiles
+**Lo que aportó mi criterio (y la IA no podía decidir por mí):**
+- El **contexto de negocio**: por qué una misma vulnerabilidad pesa distinto en telemedicina (fichas clínicas y recetas) que en otro rubro
+- La **regulación local** correcta (Ley 19.628, Ley 20.584, Superintendencia de Salud), frente a la tendencia de la IA a citar marcos extranjeros
+- La **valoración de los riesgos** (probabilidad × impacto) y los objetivos de recuperación (RPO/RTO) con criterio clínico
+- La **evidencia real** de los ataques, capturada por mí en DVWA
+- La **verificación honesta** del propio trabajo, incluida esta bitácora
 
 **Conclusión:**
-La IA es una herramienta de amplificación del trabajo del analista, no un sustituto. El valor de esta auditoría no está en lo que generó la IA, sino en el juicio crítico aplicado para seleccionar, corregir y contextualizar cada hallazgo en el escenario real de SaludOnline.
+Confirmé en la práctica lo que advierte la rúbrica: los prompts genéricos producen respuestas genéricas, y una IA mal dirigida puede proponer defensas insuficientes (p. ej. "validar la entrada" en vez de consultas parametrizadas). El valor de esta auditoría no está en lo que generó la IA, sino en dirigirla con precisión, corregir lo que entregó y contextualizarlo en el escenario real de SaludOnline. La IA fue un amplificador del trabajo del analista, no un sustituto.
