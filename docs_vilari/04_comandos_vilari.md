@@ -25,7 +25,7 @@
 
 ![Evidencia de Inyección de Comandos en DVWA](img_vilari/comandos_vilari.png)
 
-*Figura 3 — Portal de SaludOnline (DVWA, nivel Low). Con el payload `127.0.0.1; cat /etc/passwd` en el campo "Enter an IP address", el servidor ejecuta el comando inyectado tras el `ping` y devuelve el contenido de `/etc/passwd` (cuentas del sistema: root, daemon, www-data, mysql, …), confirmando la **ejecución de comandos del sistema operativo** en el servidor.*
+*Figura 3 — Portal de SaludOnline (DVWA, nivel Low). El payload `127.0.0.1; cat /etc/passwd` se observa escrito en el campo "Enter an IP address" y, tras enviarlo, el servidor ejecuta el comando inyectado después del `ping` y devuelve el contenido de `/etc/passwd` (cuentas del sistema: root, daemon, www-data, mysql, …), confirmando la **ejecución de comandos del sistema operativo** en el servidor.*
 
 ---
 
