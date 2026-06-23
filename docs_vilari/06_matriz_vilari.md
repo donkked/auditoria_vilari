@@ -43,7 +43,7 @@
 | ID | Riesgo | Activo | P | I | P×I | Nivel |
 |---|---|---|---|---|---|---|
 | R-01 | Inyección SQL expone base de datos completa de pacientes | D-01, D-02, D-03 | 3 | 5 | **15** | Crítico |
-| R-02 | Inyección de comandos permite control total del servidor | I-01, S-01 | 2 | 5 | **10** | Alto |
+| R-02 | Inyección de comandos permite control total del servidor | I-01, S-01 | 3 | 5 | **15** | Crítico |
 | R-03 | XSS permite robo de sesiones de médicos y pacientes | S-01, D-06 | 3 | 3 | **9** | Medio |
 | R-04 | Ransomware cifra toda la infraestructura clínica | I-01, I-02, D-01 | 3 | 5 | **15** | Crítico |
 | R-05 | Phishing roba credenciales de médicos | D-06, S-01 | 4 | 3 | **12** | Alto |
@@ -64,14 +64,14 @@ IMPACTO →
                  1-Insig.  2-Menor   3-Moder.  4-Mayor   5-Catastr.
 P  5-C.Seguro  [  5-M  ] [  10-A ] [  15-C ] [  20-C ] [  25-C  ]
 R  4-Probable  [  4-B  ] [   8-M ] [  12-A ] [  16-C ] [  20-C  ] ← R-05
-O  3-Posible   [  3-B  ] [   6-M ] [   9-M ] [  12-A ] [  15-C  ] ← R-01, R-04, R-06, R-03, R-09
-B  2-Improbab. [  2-B  ] [   4-B ] [   6-M ] [   8-M ] [  10-A  ] ← R-02, R-10, R-07, R-08
+O  3-Posible   [  3-B  ] [   6-M ] [   9-M ] [  12-A ] [  15-C  ] ← R-01, R-02, R-04, R-06, R-03, R-09
+B  2-Improbab. [  2-B  ] [   4-B ] [   6-M ] [   8-M ] [  10-A  ] ← R-10, R-07, R-08
 A  1-Rara      [  1-B  ] [   2-B ] [   3-B ] [   4-B ] [   5-M  ]
 ↑
 
 Riesgos identificados:
 R-01 (P=3, I=5): Crítico  → casilla [Posible × Catastrófico]
-R-02 (P=2, I=5): Alto     → casilla [Improbable × Catastrófico]
+R-02 (P=3, I=5): Crítico  → casilla [Posible × Catastrófico]
 R-03 (P=3, I=3): Medio    → casilla [Posible × Moderado]
 R-04 (P=3, I=5): Crítico  → casilla [Posible × Catastrófico]
 R-05 (P=4, I=3): Alto     → casilla [Probable × Moderado]

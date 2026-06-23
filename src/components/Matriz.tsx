@@ -13,7 +13,7 @@ interface Riesgo {
 
 const riesgos: Riesgo[] = [
   { id: 'R-01', nombre: 'Inyección SQL',        probabilidad: 3, impacto: 5, descripcion: 'Expone base de datos completa de pacientes' },
-  { id: 'R-02', nombre: 'Iny. de Comandos',     probabilidad: 2, impacto: 5, descripcion: 'Control total del servidor web' },
+  { id: 'R-02', nombre: 'Iny. de Comandos',     probabilidad: 3, impacto: 5, descripcion: 'Control total del servidor web' },
   { id: 'R-03', nombre: 'XSS Reflejado',        probabilidad: 3, impacto: 3, descripcion: 'Robo de sesiones de médicos y pacientes' },
   { id: 'R-04', nombre: 'Ransomware',            probabilidad: 3, impacto: 5, descripcion: 'Cifrado de toda la infraestructura clínica' },
   { id: 'R-05', nombre: 'Phishing médicos',     probabilidad: 4, impacto: 3, descripcion: 'Robo de credenciales de acceso al sistema' },
