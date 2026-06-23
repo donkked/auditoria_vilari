@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
+import BackToTop from './components/BackToTop'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Resumen from './components/Resumen'
@@ -81,6 +82,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <BackToTop />
     </BrowserRouter>
   )
 }

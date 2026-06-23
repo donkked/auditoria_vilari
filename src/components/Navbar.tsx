@@ -34,9 +34,14 @@ export default function Navbar() {
     <header className={`navbar${onHome ? ' navbar-home' : ''}`}>
       <div className="navbar-inner">
         <Link to="/" className="navbar-brand" onClick={() => setOpen(false)}>
-          <ShieldIcon />
-          <span className="navbar-logo">
-            auditoria<span className="navbar-logo-accent">_vilari</span>
+          <span className="navbar-brand-badge">
+            <ShieldIcon />
+          </span>
+          <span className="navbar-brand-text">
+            <span className="navbar-logo">
+              auditoria<span className="navbar-logo-accent">_vilari</span>
+            </span>
+            <span className="navbar-tagline">Auditoría de Seguridad Web</span>
           </span>
         </Link>
 
