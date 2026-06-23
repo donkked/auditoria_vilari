@@ -25,8 +25,6 @@
 
 ![Evidencia de Inyección de Comandos en DVWA](img_vilari/comandos_vilari.png)
 
-> **Nota:** Reemplazar con la captura real obtenida de DVWA.
-
 ---
 
 ## 2. Explicación Técnica

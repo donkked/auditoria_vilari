@@ -25,8 +25,6 @@
 
 ![Evidencia de Inyección SQL en DVWA](img_vilari/sqli_vilari.png)
 
-> **Nota:** Reemplazar con la captura real obtenida de DVWA.
-
 ---
 
 ## 2. Explicación Técnica
