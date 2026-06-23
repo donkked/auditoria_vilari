@@ -25,6 +25,8 @@
 
 ![Evidencia de Inyección de Comandos en DVWA](img_vilari/comandos_vilari.png)
 
+*Figura 3 — Portal de SaludOnline (DVWA, nivel Low). Con el payload `127.0.0.1; cat /etc/passwd` en el campo "Enter an IP address", el servidor ejecuta el comando inyectado tras el `ping` y devuelve el contenido de `/etc/passwd` (cuentas del sistema: root, daemon, www-data, mysql, …), confirmando la **ejecución de comandos del sistema operativo** en el servidor.*
+
 ---
 
 ## 2. Explicación Técnica
@@ -159,6 +161,8 @@ result = subprocess.run(
 | Allowlist de entradas | Solo aceptar IPs que cumplan una expresión regular estricta | Alta |
 | AppArmor / SELinux | Perfiles de seguridad del kernel que restringen qué comandos puede ejecutar el proceso | Alta |
 | Detección de anomalías | Monitorear procesos hijos del servidor web (spawn de bash, curl, etc.) | Media |
+
+> **Marcos de referencia:** OWASP Top 10 **A03:2021 – Injection** · OWASP *OS Command Injection Defense Cheat Sheet* · NIST SP 800-53 **SI-10** y **CM-7** (mínima funcionalidad) · CIS Controls v8 **4** (configuración segura).
 
 ---
 

@@ -53,6 +53,12 @@
 | R-09 | Falla de plataforma de videoconsultas en consulta urgente | S-03 | 3 | 3 | **9** | Medio |
 | R-10 | Insider vende datos de pacientes a terceros | D-01, D-03 | 2 | 5 | **10** | Alto |
 
+### Justificación de las tres vulnerabilidades demostradas
+
+- **R-01 · Inyección SQL** — *Probabilidad 3 (Posible):* el portal es accesible por Internet y el payload es trivial; los escaneos automatizados de SQLi son constantes contra el sector salud. *Impacto 5 (Catastrófico):* expone la totalidad de fichas clínicas y recetas, gatillando multas regulatorias (Ley 19.628) y pérdida de confianza de los pacientes.
+- **R-02 · Inyección de comandos** — *Probabilidad 3 (Posible):* tan trivial y sin autenticación como la SQLi sobre el mismo portal expuesto. *Impacto 5 (Catastrófico):* otorga control total del servidor y habilita el despliegue de ransomware sobre toda la infraestructura clínica.
+- **R-03 · XSS Reflejado** — *Probabilidad 3 (Posible):* requiere que la víctima abra un enlace manipulado, pero los médicos reciben enlaces de citas y notificaciones a diario. *Impacto 3 (Moderado):* permite robar la sesión de un usuario y sus datos, sin comprometer directamente el servidor completo.
+
 ---
 
 ## 3. Mapa de Calor (Matriz 5×5)
@@ -84,7 +90,21 @@ R-10 (P=2, I=5): Alto     → casilla [Improbable × Catastrófico]
 
 ---
 
-## 4. Plan de Tratamiento de Riesgos
+## 4. Priorización de Vulnerabilidades
+
+El orden de atención combina dos dimensiones: el puntaje **CVSS 3.1** (gravedad técnica de la falla) y la posición en la **matriz de riesgo** (P × I, impacto para el negocio de telemedicina). Se atienden primero las vulnerabilidades que son críticas en ambas.
+
+| Prioridad | Vulnerabilidad | CVSS 3.1 | Riesgo (P×I) | Justificación del orden de atención |
+|---|---|---|---|---|
+| **1** | Inyección SQL (R-01) | **10.0 — Crítica** | 15 — Crítico | Máximo CVSS y riesgo crítico; expone toda la base de datos de pacientes sin autenticación. Atención inmediata. |
+| **2** | Inyección de comandos (R-02) | **10.0 — Crítica** | 15 — Crítico | Mismo CVSS máximo y riesgo crítico; otorga control total del servidor. Atención inmediata, en paralelo con R-01. |
+| **3** | XSS Reflejado (R-03) | **6.1 — Media** | 9 — Medio | CVSS y riesgo menores; requiere interacción de la víctima y no compromete el servidor. Se atiende tras las dos críticas. |
+
+Las tres vulnerabilidades demostradas se priorizan por encima del resto de riesgos del registro por tratarse de fallas de **explotación directa y confirmada** sobre el portal. Entre ellas, SQLi y comandos comparten el primer lugar (CVSS 10.0 + riesgo crítico) y XSS queda en tercer lugar, en coherencia tanto con su CVSS (6.1) como con su posición en el mapa de calor.
+
+---
+
+## 5. Plan de Tratamiento de Riesgos
 
 | ID | Riesgo | Estrategia | Control Principal | Responsable | Plazo |
 |---|---|---|---|---|---|

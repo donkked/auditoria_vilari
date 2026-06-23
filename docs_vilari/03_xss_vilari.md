@@ -31,6 +31,8 @@ En la captura se empleó una variante con una cadena identificadora propia (`Vil
 
 ![Evidencia de XSS Reflejado en DVWA](img_vilari/xss_vilari.png)
 
+*Figura 2 — Portal de SaludOnline (DVWA, nivel Low). El payload `<script>alert('Villarroel')</script>` —visible codificado en la barra de URL (`?name=...`)— se ejecuta en el navegador y muestra el cuadro de alerta con la cadena "Villarroel", confirmando la **ejecución de código arbitrario** controlado por el atacante.*
+
 ---
 
 ## 2. Explicación Técnica
@@ -156,6 +158,8 @@ return <p dangerouslySetInnerHTML={{__html: name}} />; // INSEGURO
 | X-XSS-Protection Header | Habilita el filtro XSS integrado de navegadores legacy | Media |
 | Input validation | Rechazar caracteres HTML en campos de texto plano | Media |
 | WAF con reglas OWASP | Detectar y bloquear payloads XSS conocidos | Alta |
+
+> **Marcos de referencia:** OWASP Top 10 **A03:2021 – Injection** · OWASP *XSS Prevention Cheat Sheet* · NIST SP 800-53 **SI-10** · CIS Controls v8 **16.11** (codificación segura de la salida).
 
 ### Cabecera CSP recomendada para SaludOnline
 

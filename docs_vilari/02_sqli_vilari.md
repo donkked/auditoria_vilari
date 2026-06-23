@@ -25,6 +25,8 @@
 
 ![Evidencia de Inyección SQL en DVWA](img_vilari/sqli_vilari.png)
 
+*Figura 1 — Portal de SaludOnline (DVWA, nivel Low). Al ingresar el payload `' OR '1'='1` en el campo "User ID", la aplicación refleja la consulta (`ID: ' OR '1'='1`) y devuelve la **tabla completa de usuarios** (admin, Gordon Brown, Hack Me, Pablo Picasso, Bob Smith), confirmando el acceso no autorizado a todos los registros de la base de datos.*
+
 ---
 
 ## 2. Explicación Técnica
@@ -136,6 +138,8 @@ Si la aplicación no puede ser parcheada de inmediato, aplicar los siguientes co
 | Monitoreo de consultas | Alertar ante consultas que retornen más de N registros inesperadamente | Media |
 | Cifrado de datos sensibles en DB | Las fichas clínicas deben estar cifradas en reposo | Media |
 | Rate limiting | Limitar la cantidad de solicitudes por IP y usuario | Baja |
+
+> **Marcos de referencia:** OWASP Top 10 **A03:2021 – Injection** · OWASP *SQL Injection Prevention Cheat Sheet* · NIST SP 800-53 **SI-10** (validación de entrada) · CIS Controls v8 **16** (seguridad del software de aplicación).
 
 ---
 
