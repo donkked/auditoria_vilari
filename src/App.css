@@ -34,6 +34,46 @@ body {
   color: var(--c-text);
 }
 
+/* Animated ambient background (aurora) — drifts behind transparent content
+   on the inner section pages; subtle so it never hurts readability */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  width: 130vw;
+  height: 130vh;
+  top: -15vh;
+  left: -15vw;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 28% 32%, rgba(34, 211, 238, 0.14), transparent 42%),
+    radial-gradient(circle at 72% 64%, rgba(20, 184, 166, 0.11), transparent 45%);
+  filter: blur(40px);
+  animation: aurora-a 28s ease-in-out infinite alternate;
+}
+
+body::after {
+  background:
+    radial-gradient(circle at 64% 22%, rgba(14, 116, 144, 0.15), transparent 42%),
+    radial-gradient(circle at 22% 82%, rgba(34, 211, 238, 0.10), transparent 45%);
+  filter: blur(48px);
+  animation: aurora-b 36s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(5vw, 4vh) scale(1.12); }
+}
+
+@keyframes aurora-b {
+  0%   { transform: translate(0, 0) scale(1.08); }
+  100% { transform: translate(-4vw, -5vh) scale(1); }
+}
+
 .site-main {
   min-height: 70vh;
 }
@@ -557,7 +597,7 @@ body {
 
 .home {
   position: relative;
-  background: var(--c-bg);
+  background: transparent;
   overflow-x: hidden;
 }
 
@@ -576,17 +616,10 @@ body {
 .home-bg {
   position: absolute;
   inset: 0;
-  background: url('/img_vilari/cyber-bg.svg') center / cover no-repeat;
   z-index: 0;
-}
-
-.home-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 42%, transparent 0%, rgba(4,7,14,0.6) 100%),
-    linear-gradient(to bottom, rgba(4,7,14,0.55), transparent 28%, rgba(4,7,14,0.7));
+    radial-gradient(ellipse 90% 70% at 70% 18%, rgba(12, 26, 43, 0.55), transparent 60%),
+    radial-gradient(ellipse 130% 120% at 50% 30%, transparent 55%, rgba(4, 7, 14, 0.45));
 }
 
 .home-glow {
@@ -624,6 +657,18 @@ body {
   width: 100%;
   max-width: 920px;
   text-align: center;
+}
+
+/* Animated network (canvas), fades out toward the bottom to blend seamlessly */
+.network-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 95%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 95%);
 }
 
 /* Animated dot-grid texture, fading toward the edges */
@@ -988,14 +1033,13 @@ body {
 .home-sections {
   position: relative;
   z-index: 1;
-  padding: 88px 32px 112px;
-  border-top: 1px solid rgba(34, 211, 238, 0.08);
-  background:
-    radial-gradient(ellipse 120% 55% at 50% 0%, rgba(34, 211, 238, 0.06), transparent 60%),
-    var(--c-bg);
+  padding: 40px 32px 112px;
+  background: transparent;
 }
 
 .home-sections-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1140px;
   margin: 0 auto;
 }
@@ -1026,6 +1070,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .anim { opacity: 1; animation: none; }
   .home-scanline, .home-glow, .home-particle, .home-scroll-chevron { animation: none; }
+  body::before, body::after { animation: none; }
 }
 
 /* ════════════════════════════════════════

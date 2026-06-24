@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import NetworkBackground from './NetworkBackground'
 
 interface SectionBtn {
   to: string
@@ -56,6 +57,7 @@ export default function Home() {
       {/* ── HERO (pantalla completa, solo título) ── */}
       <section className="home-hero">
         <div className="home-bg" />
+        <NetworkBackground />
         <div className="home-grid-overlay" />
         <div className="home-glow" />
         <div className="home-glow home-glow-2" />
